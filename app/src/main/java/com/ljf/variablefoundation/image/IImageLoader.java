@@ -8,4 +8,5 @@ public interface IImageLoader {
 
     void apply(ImageLoader.Builder builder);
 
+    // TODO: 2018/11/9 清除缓存功能 
 }
