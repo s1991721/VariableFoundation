@@ -20,6 +20,7 @@ public class MainActivity extends BaseActivity {
     ImageView imageV;
     Button showDialogBt;
     Button dismissDialogBt;
+    Button exceptionBt;
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showLoadindDialog("dialog", false);
-                handler.sendEmptyMessageDelayed(8,5000);
+                handler.sendEmptyMessageDelayed(8, 5000);
             }
         });
 
@@ -70,6 +71,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dismissLoadindDialog();
+            }
+        });
+
+        exceptionBt = findViewById(R.id.exceptionBt);
+        exceptionBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int result = 10 / 0;
             }
         });
     }
