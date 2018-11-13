@@ -2,6 +2,7 @@ package com.ljf.variablefoundation.http;
 
 /**
  * Created by mr.lin on 2018/11/7
+ * 错误码
  */
 public class HttpCode {
 

@@ -51,6 +51,7 @@ public class BaseApplication extends Application {
 
     private HashMap<String, BaseManager> managers = new HashMap<>();
 
+    //初始化manager
     private void initManager() {
         List<BaseManager> managerList = new ArrayList<>();
         registerManager(managerList);
@@ -117,10 +118,12 @@ public class BaseApplication extends Application {
 
     }
 
+    //获取全局manager
     public <M extends BaseManager> M getManager(Class<M> cls) {
         return (M) managers.get(cls.getName());
     }
 
+    //异常捕获
     private void initLog() {
         if (BuildConfig.DEBUG) {
             Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();

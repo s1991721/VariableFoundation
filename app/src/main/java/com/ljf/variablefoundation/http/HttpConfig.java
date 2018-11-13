@@ -2,6 +2,7 @@ package com.ljf.variablefoundation.http;
 
 /**
  * Created by mr.lin on 2018/11/7
+ * 网络配置
  */
 public class HttpConfig {
 
