@@ -21,7 +21,7 @@ import com.ljf.variablefoundation.utils.Logger;
  */
 public class BaseActivity extends FragmentActivity {
 
-    private Logger logger = new Logger(this);
+    protected Logger logger = new Logger(this);
     private ProgressDialog loadingDialog;
 
     @Override
