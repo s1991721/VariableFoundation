@@ -138,4 +138,8 @@ public class BaseActivity extends FragmentActivity {
         IBinder windowToken = currentFocus.getWindowToken();
         imm.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
+    public void onBackClick(View view) {
+        finish();
+    }
 }

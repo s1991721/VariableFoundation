@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ActionBar">
+        <attr name="title_text" format="string" />
+        <attr name="left_text" format="string" />
+        <attr name="right_text" format="string" />
+        <attr name="leftOnClick" format="string" />
+        <attr name="rightOnClick" format="string" />
+        <attr name="titleOnClick" format="string" />
+        <attr name="left_icon" format="reference" />
+        <attr name="right_icon" format="reference" />
+        <attr name="function">
+            <flag name="NONE" value="0"/>
+            <flag name="LEFT_TITLE" value="2" />
+            <flag name="LEFT_BTN" value="4" />
+            <flag name="TITLE" value="8" />
+            <flag name="RIGHT_TITLE" value="16" />
+            <flag name="RIGHT_BTN" value="32" />
+        </attr>
+
+    </declare-styleable>
+
+</resources>
