@@ -47,6 +47,8 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
         val rightClick = typeArray.getString(R.styleable.ActionBar_rightOnClick)
         val titleClick = typeArray.getString(R.styleable.ActionBar_titleOnClick)
 
+        typeArray.recycle()
+
         setFunction(function)
         setLeftText(leftText)
         setLeftDrawable(leftDrawable)
@@ -68,11 +70,31 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
         }
         this.function = function
 
-        if (isFunctionEnable(FUNCTION_LEFT_TITLE)) leftTv.visibility = visibility
-        if (isFunctionEnable(FUNCTION_LEFT_BTN)) leftIb.visibility = visibility
-        if (isFunctionEnable(FUNCTION_TITLE)) titleTv.visibility = visibility
-        if (isFunctionEnable(FUNCTION_RIGHT_TITLE)) rightTv.visibility = visibility
-        if (isFunctionEnable(FUNCTION_RIGHT_BTN)) rightIb.visibility = visibility
+        if (isFunctionEnable(FUNCTION_LEFT_TITLE)) {
+            leftTv.visibility = View.VISIBLE
+        } else {
+            leftTv.visibility = View.GONE
+        }
+        if (isFunctionEnable(FUNCTION_LEFT_BTN)) {
+            leftIb.visibility = View.VISIBLE
+        } else {
+            leftIb.visibility = View.GONE
+        }
+        if (isFunctionEnable(FUNCTION_TITLE)) {
+            titleTv.visibility = View.VISIBLE
+        } else {
+            titleTv.visibility = View.GONE
+        }
+        if (isFunctionEnable(FUNCTION_RIGHT_TITLE)) {
+            rightTv.visibility = View.VISIBLE
+        } else {
+            rightTv.visibility = View.GONE
+        }
+        if (isFunctionEnable(FUNCTION_RIGHT_BTN)) {
+            rightIb.visibility = View.VISIBLE
+        } else {
+            rightIb.visibility = View.GONE
+        }
 
     }
 
@@ -127,8 +149,12 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
 
     private fun getClickListener(method: String?): OnClickListener? {
         if (!TextUtils.isEmpty(method)) {
-            val method = context.javaClass.getMethod(method!!, View::class.java)
-            return InjectOnClickListener(method, context)
+            return try {
+                val m = context.javaClass.getMethod(method!!, View::class.java)
+                InjectOnClickListener(m, context)
+            } catch (e: Exception) {
+                null
+            }
         }
         return null
     }
