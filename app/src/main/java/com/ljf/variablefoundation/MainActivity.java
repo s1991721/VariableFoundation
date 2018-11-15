@@ -82,4 +82,56 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
+
+//    TabItem 的使用
+//    private View.OnClickListener onTabItemClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            clearTabItemsState();
+//            showFragment((Class<BaseFragment>) v.getTag());
+//        }
+//    };
+//
+//    private String currentFragmentTag;
+//
+//    private void init() {
+//        homeTab.setOnClickListener(onTabItemClickListener);
+//        findTab.setOnClickListener(onTabItemClickListener);
+//        hotTab.setOnClickListener(onTabItemClickListener);
+//        mineTab.setOnClickListener(onTabItemClickListener);
+//    }
+//
+//    private void clearTabItemsState() {
+//        homeTab.setSelect(false);
+//        findTab.setSelect(false);
+//        hotTab.setSelect(false);
+//        mineTab.setSelect(false);
+//    }
+//
+//    private void showFragment(Class<BaseFragment> fragmentClass) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        BaseFragment hideFragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(currentFragmentTag);
+//        if (hideFragment != null) {
+//            transaction.hide(hideFragment);
+//        }
+//
+//        BaseFragment showFragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
+//
+//        if (showFragment == null) {
+//            try {
+//                showFragment = fragmentClass.newInstance();
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            } catch (InstantiationException e) {
+//                e.printStackTrace();
+//            }
+//            transaction.add(R.id.frame_layout, showFragment, fragmentClass.getSimpleName());
+//        } else {
+//            transaction.show(showFragment);
+//        }
+//        transaction.commit();
+//        currentFragmentTag = fragmentClass.getSimpleName();
+//
+//    }
 }

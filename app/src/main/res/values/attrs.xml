@@ -21,4 +21,11 @@
 
     </declare-styleable>
 
+    <declare-styleable name="TabItem">
+        <attr name="tip" format="string"/>
+        <attr name="selectColor" format="color"/>
+        <attr name="unSelectColor" format="color"/>
+        <attr name="selectIcon" format="reference"/>
+        <attr name="unSelectIcon" format="reference"/>
+    </declare-styleable>
 </resources>
