@@ -47,4 +47,12 @@ public class SettingManager extends BaseManager {
     public void removeGlobalSetting(String key) {
         globalSP.edit().remove(key).apply();
     }
+
+    public void removeAllUserSetting() {
+        getUserSP().edit().clear().apply();
+    }
+
+    public void removeAllGlobalSetting() {
+        globalSP.edit().clear().apply();
+    }
 }

@@ -5,6 +5,9 @@ import android.app.Application;
 
 import com.ljf.variablefoundation.BuildConfig;
 import com.ljf.variablefoundation.UserManager;
+import com.ljf.variablefoundation.db.CacheManager;
+import com.ljf.variablefoundation.db.DataBaseManager;
+import com.ljf.variablefoundation.db.SettingManager;
 import com.ljf.variablefoundation.exception.ExceptionCaughtAdapter;
 
 import java.lang.reflect.Field;
@@ -68,8 +71,11 @@ public class BaseApplication extends Application {
     }
 
     //注册manager
-    private void registerManager(List managers) {
+    private void registerManager(List<BaseManager> managers) {
         managers.add(new UserManager());
+        managers.add(new SettingManager());
+        managers.add(new CacheManager());
+        managers.add(new DataBaseManager());
     }
 
     //注解manager
