@@ -19,8 +19,8 @@ public class DataBaseManager extends BaseManager {
     private UserManager.OnUserStateChangeListener onUserStateChangeListener = new UserManager.OnUserStateChangeListener() {
         @Override
         public void onStateChange(int state) {
+            userSQLiteOpenHelper.close();
             initUserOpenHelper();
-
         }
     };
 
