@@ -5,9 +5,9 @@ import android.app.Application;
 
 import com.ljf.variablefoundation.BuildConfig;
 import com.ljf.variablefoundation.UserManager;
-import com.ljf.variablefoundation.db.CacheManager;
-import com.ljf.variablefoundation.db.DataBaseManager;
-import com.ljf.variablefoundation.db.SettingManager;
+import com.ljf.variablefoundation.db.cache.CacheManager;
+import com.ljf.variablefoundation.db.database.DataBaseManager;
+import com.ljf.variablefoundation.db.cache.SettingManager;
 import com.ljf.variablefoundation.exception.ExceptionCaughtAdapter;
 
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.ljf.variablefoundation.db;
+package com.ljf.variablefoundation.db.cache;
 
 import com.ljf.variablefoundation.UserManager;
 import com.ljf.variablefoundation.base.BaseManager;

@@ -1,4 +1,4 @@
-package com.ljf.variablefoundation.db;
+package com.ljf.variablefoundation.db.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
