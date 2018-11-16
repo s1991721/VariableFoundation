@@ -18,7 +18,8 @@
             <flag name="RIGHT_TITLE" value="16" />
             <flag name="RIGHT_BTN" value="32" />
         </attr>
-
+        <attr name="status_bar_enable" format="boolean"/>
+        <attr name="status_bar_bg" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="TabItem">

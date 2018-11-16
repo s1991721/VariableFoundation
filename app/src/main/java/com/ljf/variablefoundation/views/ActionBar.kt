@@ -1,12 +1,14 @@
 package com.ljf.variablefoundation.views
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import com.ljf.variablefoundation.R
 import kotlinx.android.synthetic.main.view_actionbar.view.*
 import java.lang.reflect.Method
@@ -15,7 +17,7 @@ import java.lang.reflect.Method
  * Created by mr.lin on 2018/11/14
  * 通用标题栏
  */
-class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : RelativeLayout(context, attrs, defStyleAttr) {
+class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr) {
 
     private var function = -1
 
@@ -34,6 +36,7 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_actionbar, this)
+        orientation = VERTICAL
 
         val typeArray = context.obtainStyledAttributes(attrs, R.styleable.ActionBar)
 
@@ -46,6 +49,8 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
         var leftClick = typeArray.getString(R.styleable.ActionBar_leftOnClick)
         val rightClick = typeArray.getString(R.styleable.ActionBar_rightOnClick)
         val titleClick = typeArray.getString(R.styleable.ActionBar_titleOnClick)
+        val statusBarEnable = typeArray.getBoolean(R.styleable.ActionBar_status_bar_enable, true)
+        val statusBarBg = typeArray.getDrawable(R.styleable.ActionBar_status_bar_bg)
 
         typeArray.recycle()
 
@@ -55,6 +60,8 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
         setTitle(title)
         setRightText(rightText)
         setRightDrawable(rightDrawable)
+        setStatusBar(statusBarEnable, statusBarBg)
+
 
         if (TextUtils.isEmpty(leftClick)) leftClick = "onBackClick"
         setLeftOnClickListener(getClickListener(leftClick))
@@ -130,6 +137,20 @@ class ActionBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Rel
     private fun setRightDrawable(drawable: Drawable?) {
         if (drawable != null) {
             rightIb.setImageDrawable(drawable)
+        }
+    }
+
+    private fun setStatusBar(enable: Boolean, drawable: Drawable?) {
+        if (enable) {
+            statusBar.visibility = View.VISIBLE
+        } else {
+            statusBar.visibility = View.GONE
+            return
+        }
+        if (drawable != null) {
+            statusBar.background = drawable
+        }else{
+            statusBar.background=ColorDrawable(Color.parseColor("#ff0000"))
         }
     }
 
