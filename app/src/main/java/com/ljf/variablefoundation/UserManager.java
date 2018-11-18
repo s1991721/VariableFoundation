@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by mr.lin on 2018/11/13
+ * 用户管理
  */
 public class UserManager extends BaseManager {
 
