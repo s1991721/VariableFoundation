@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            dismissLoadindDialog();
+            dismissLoadingDialog();
             return true;
         }
     });
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         showDialogBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLoadindDialog("dialog", false);
+                showLoadingDialog("dialog", false);
                 handler.sendEmptyMessageDelayed(8, 5000);
             }
         });
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
         dismissDialogBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismissLoadindDialog();
+                dismissLoadingDialog();
             }
         });
 
