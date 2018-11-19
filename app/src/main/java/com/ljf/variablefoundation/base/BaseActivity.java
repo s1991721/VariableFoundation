@@ -42,19 +42,19 @@ public class BaseActivity extends FragmentActivity {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void showLoadindDialog() {
-        showLoadindDialog("", false);
+    public void showLoadingDialog() {
+        showLoadingDialog("", false);
     }
 
-    public void showLoadindDialog(String msg) {
-        showLoadindDialog(msg, false);
+    public void showLoadingDialog(String msg) {
+        showLoadingDialog(msg, false);
     }
 
-    public void showLoadindDialog(int resId) {
-        showLoadindDialog(getString(resId), false);
+    public void showLoadingDialog(int resId) {
+        showLoadingDialog(getString(resId), false);
     }
 
-    public void showLoadindDialog(String msg, boolean cancelable) {
+    public void showLoadingDialog(String msg, boolean cancelable) {
         if (isFinishing()) {
             return;
         }
@@ -69,7 +69,7 @@ public class BaseActivity extends FragmentActivity {
         loadingDialog.show();
     }
 
-    public void dismissLoadindDialog() {
+    public void dismissLoadingDialog() {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
             loadingDialog = null;
@@ -79,7 +79,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void finish() {
         super.finish();
-        dismissLoadindDialog();
+        dismissLoadingDialog();
     }
 
     @Override
