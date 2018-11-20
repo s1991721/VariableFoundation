@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.ljf.variablefoundation.base.BaseActivity;
 import com.ljf.variablefoundation.http.OnResponseListener;
 import com.ljf.variablefoundation.image.ImageLoader;
+import com.ljf.variablefoundation.utils.PermissionUtils;
 
 /**
  * Created by mr.lin on 2018/11/7
@@ -81,6 +82,8 @@ public class MainActivity extends BaseActivity {
                 int result = 10 / 0;
             }
         });
+
+        PermissionUtils.requestAllPermission(this);
     }
 
 

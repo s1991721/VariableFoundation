@@ -1,8 +1,7 @@
 package com.ljf.variablefoundation.utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 
 import com.ljf.variablefoundation.base.BaseActivity;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -17,7 +16,13 @@ import io.reactivex.functions.Consumer;
 public class PermissionUtils {
 
     public static String[] permissions = new String[]{
-
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA,
+            Manifest.permission.CALL_PHONE
     };
 
     public static void requestAllPermission(BaseActivity activity) {
@@ -39,7 +44,8 @@ public class PermissionUtils {
     }
 
     public static boolean isPermissionGranded(BaseActivity activity, String permission) {
-        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(activity, permission);
+//        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(activity, permission);
+        return new RxPermissions(activity).isGranted(permission);
     }
 
     @SuppressLint("CheckResult")

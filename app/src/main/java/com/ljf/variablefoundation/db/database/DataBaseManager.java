@@ -16,6 +16,7 @@ public class DataBaseManager extends BaseManager {
 
     @Manager
     private UserManager userManager;
+
     private UserManager.OnUserStateChangeListener onUserStateChangeListener = new UserManager.OnUserStateChangeListener() {
         @Override
         public void onStateChange(int state) {
