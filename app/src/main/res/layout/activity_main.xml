@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.ljf.variablefoundation.views.ActionBar
+    <com.canceraide.mylibrary.views.ActionBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:function="TITLE|LEFT_BTN|RIGHT_BTN" />
@@ -49,12 +49,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.ljf.variablefoundation.views.TabItem
+        <com.canceraide.mylibrary.views.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tip="@string/app_name" />
 
-        <com.ljf.variablefoundation.views.TabItem
+        <com.canceraide.mylibrary.views.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tip="@string/app_name" />
