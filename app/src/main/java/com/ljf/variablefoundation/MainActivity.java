@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.canceraide.mylibrary.LoginInfo;
-import com.canceraide.mylibrary.LoginRequester;
 import com.canceraide.mylibrary.base.BaseActivity;
-import com.canceraide.mylibrary.http.OnResponseListener;
 import com.canceraide.mylibrary.image.ImageLoader;
+import com.canceraide.mylibrary.net.http.OnResponseListener;
+import com.canceraide.mylibrary.user.bean.UserInfo;
+import com.canceraide.mylibrary.user.requester.LoginRequester;
 import com.canceraide.mylibrary.utils.PermissionUtils;
 
 /**
@@ -42,12 +42,17 @@ public class MainActivity extends BaseActivity {
         httpBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoginRequester(new OnResponseListener<LoginInfo>() {
+                new LoginRequester(new OnResponseListener<UserInfo>() {
                     @Override
-                    public void onResponse(int code, LoginInfo data) {
-                        httpBt.setText(data.getName() + "\n" + data.getPwd());
+                    public void onResponse(UserInfo data) {
+
                     }
-                }).request();
+
+                    @Override
+                    public void onError(int code, String msg) {
+
+                    }
+                }, "", "").request();
             }
         });
 
