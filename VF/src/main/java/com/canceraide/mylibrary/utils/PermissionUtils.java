@@ -2,6 +2,9 @@ package com.canceraide.mylibrary.utils;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 
 import com.canceraide.mylibrary.base.BaseActivity;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -43,9 +46,9 @@ public class PermissionUtils {
                 });
     }
 
-    public static boolean isPermissionGranded(BaseActivity activity, String permission) {
-//        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(activity, permission);
-        return new RxPermissions(activity).isGranted(permission);
+    public static boolean isPermissionGranded(Context context, String permission) {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(context, permission);
+//        return new RxPermissions(activity).isGranted(permission);
     }
 
     @SuppressLint("CheckResult")
