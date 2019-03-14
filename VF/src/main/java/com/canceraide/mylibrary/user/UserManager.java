@@ -1,6 +1,5 @@
 package com.canceraide.mylibrary.user;
 
-import android.content.Intent;
 import android.text.TextUtils;
 
 import com.canceraide.mylibrary.base.BaseApplication;
@@ -11,7 +10,18 @@ import com.canceraide.mylibrary.user.bean.Feedback;
 import com.canceraide.mylibrary.user.bean.MyInfo;
 import com.canceraide.mylibrary.user.bean.UploadImgInfo;
 import com.canceraide.mylibrary.user.bean.UserInfo;
-import com.canceraide.mylibrary.user.requester.*;
+import com.canceraide.mylibrary.user.requester.CheckAccountRequester;
+import com.canceraide.mylibrary.user.requester.EditMyInfoRequester;
+import com.canceraide.mylibrary.user.requester.LoginRequester;
+import com.canceraide.mylibrary.user.requester.LogoutRequester;
+import com.canceraide.mylibrary.user.requester.ModifyPasswordRequester;
+import com.canceraide.mylibrary.user.requester.MyInfoRequester;
+import com.canceraide.mylibrary.user.requester.RegisterRequester;
+import com.canceraide.mylibrary.user.requester.ResetPasswordRequester;
+import com.canceraide.mylibrary.user.requester.SaveFeedbackRequester;
+import com.canceraide.mylibrary.user.requester.UploadFeedbackImgRequester;
+import com.canceraide.mylibrary.user.requester.UploadHeadImgRequester;
+import com.canceraide.mylibrary.user.requester.VerifyCodeRequester;
 import com.canceraide.mylibrary.utils.json.JsonHelper;
 
 import org.json.JSONException;
