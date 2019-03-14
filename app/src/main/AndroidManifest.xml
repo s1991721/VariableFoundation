@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name="com.canceraide.mylibrary.exception.ExceptionActivity"
+            android:name="com.jef.variablefoundation.exception.ExceptionActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:process=":exception"

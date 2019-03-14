@@ -5,7 +5,7 @@
     android:background="#f7f7f7"
     android:orientation="vertical">
 
-    <com.canceraide.mylibrary.views.ActionBar
+    <com.jef.variablefoundation.views.ActionBar
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -1,7 +1,7 @@
 package com.ljf.variablefoundation;
 
-import com.canceraide.mylibrary.base.BaseApplication;
-import com.canceraide.mylibrary.base.BaseManager;
+import com.jef.variablefoundation.base.BaseApplication;
+import com.jef.variablefoundation.base.BaseManager;
 
 import java.util.List;
 

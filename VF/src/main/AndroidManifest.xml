@@ -1,15 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.canceraide.mylibrary">
+    package="com.jef.variablefoundation">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!--Bluetooth-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application>
         <activity
-            android:name=".exception.ExceptionActivity"
+            android:name="com.jef.variablefoundation.exception.ExceptionActivity"
             android:process=":exception"
             android:screenOrientation="portrait" />
 
-        <service android:name=".net.download.DownloadService" />
+        <service android:name="com.jef.variablefoundation.net.download.DownloadService" />
     </application>
 
 </manifest>

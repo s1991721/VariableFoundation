@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.canceraide.mylibrary.base.BaseActivity;
-import com.canceraide.mylibrary.image.ImageLoader;
-import com.canceraide.mylibrary.net.http.OnResponseListener;
-import com.canceraide.mylibrary.user.bean.UserInfo;
-import com.canceraide.mylibrary.user.requester.LoginRequester;
-import com.canceraide.mylibrary.utils.PermissionUtils;
+import com.jef.variablefoundation.base.BaseActivity;
+import com.jef.variablefoundation.image.ImageLoader;
+import com.jef.variablefoundation.net.http.OnResponseListener;
+import com.jef.variablefoundation.user.bean.UserInfo;
+import com.jef.variablefoundation.user.requester.LoginRequester;
+import com.jef.variablefoundation.utils.PermissionUtils;
 
 /**
  * Created by mr.lin on 2018/11/7

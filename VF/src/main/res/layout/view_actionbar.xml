@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.canceraide.mylibrary.views.StatusBar
+    <com.jef.variablefoundation.views.StatusBar
         android:id="@+id/statusBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
