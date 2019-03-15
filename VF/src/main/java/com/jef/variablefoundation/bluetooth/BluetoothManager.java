@@ -10,11 +10,11 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
-import android.util.Log;
 
 import com.jef.variablefoundation.base.BaseManager;
 import com.jef.variablefoundation.bluetooth.bean.Device;
@@ -106,8 +106,13 @@ public class BluetoothManager extends BaseManager {
     //扫描**************************************************************
 
     private BluetoothScanner mBluetoothScanner;
-    private Map<String, Device> mScannedDevices = new HashMap<>();
     private ScanListener mScanListener;
+    private Map<String, Device> mScannedDevices = new HashMap<>();
+    private long mScanTimeOut = -1;//毫秒
+
+    public void setScanTimeOut(long timeOut) {
+        this.mScanTimeOut = timeOut;
+    }
 
     public void scan(@NonNull ScanListener scanListener) {
         scan(scanListener, null);
@@ -128,10 +133,10 @@ public class BluetoothManager extends BaseManager {
         mBluetoothScanner.scan(new BluetoothScanner.DeviceFindListener() {
             @Override
             public void onDeviceFind(Device device) {
-                Log.i("BluetoothManager", device.getAddress());
+                logger.i(device.getAddress());
                 if (!mScannedDevices.containsKey(device.getAddress())) {
 
-                    Log.i("BluetoothManager", "save");
+                    logger.i("save");
                     if (deviceFilter != null) {
                         if (deviceFilter.filter(device)) {
                             mScannedDevices.put(device.getAddress(), device);
@@ -144,6 +149,22 @@ public class BluetoothManager extends BaseManager {
                 }
             }
         });
+
+        if (mScanTimeOut > 0) {//超时
+            new CountDownTimer(mScanTimeOut, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    mScanListener.scanError(ScanListener.TIME_OUT);
+                    stopScan();
+                }
+            }.start();
+        }
+
         isScanning = true;
     }
 
@@ -173,7 +194,7 @@ public class BluetoothManager extends BaseManager {
         mBluetoothGatt = device.getBluetoothDevice().connectGatt(getApplication(), false, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-                Log.i("BluetoothManager", "onConnectionStateChange");
+                logger.i("onConnectionStateChange");
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     mBluetoothGatt.discoverServices();
                 }
@@ -181,7 +202,7 @@ public class BluetoothManager extends BaseManager {
 
             @Override
             public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-                Log.i("BluetoothManager", "onServicesDiscovered");
+                logger.i("onServicesDiscovered");
                 for (BluetoothGattService s : gatt.getServices()) {
                     int charaSize = s.getCharacteristics().size();
                     if (charaSize < 2) continue;
@@ -197,7 +218,7 @@ public class BluetoothManager extends BaseManager {
                             }
                         }
                         if (characteristicRead != null && characteristicWrite != null) {
-                            Log.i("BluetoothManager", "onServicesDiscovered OK");
+                            logger.i("onServicesDiscovered OK");
                             mBluetoothGatt.setCharacteristicNotification(characteristicRead, true);
                         }
                     }
@@ -206,18 +227,18 @@ public class BluetoothManager extends BaseManager {
 
             @Override
             public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-                Log.i("BluetoothManager", "onCharacteristicChanged");
+                logger.i("onCharacteristicChanged");
                 read(characteristic);
             }
 
             @Override
             public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-                Log.i("BluetoothManager", "onCharacteristicWrite");
+                logger.i("onCharacteristicWrite");
             }
 
             @Override
             public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-                Log.i("BluetoothManager", "onCharacteristicRead");
+                logger.i("onCharacteristicRead");
             }
         });
     }
@@ -228,7 +249,7 @@ public class BluetoothManager extends BaseManager {
     @WorkerThread
     // TODO: 2019/3/13
     public void send(byte[] order) {
-        Log.i("BluetoothManager", "send");
+        logger.i("send");
         characteristicWrite.setValue(order);
         mBluetoothGatt.writeCharacteristic(characteristicWrite);
     }
@@ -240,7 +261,7 @@ public class BluetoothManager extends BaseManager {
     @WorkerThread
     // TODO: 2019/3/13
     public void read(BluetoothGattCharacteristic characteristic) {
-//        Log.i("BluetoothManager", "read:\n" + Util.bytes2hex(characteristic.getValue()));
+//        logger.i( "read:\n" + Util.bytes2hex(characteristic.getValue()));
         mResultListener.onResult(characteristic.getValue());
     }
 }
