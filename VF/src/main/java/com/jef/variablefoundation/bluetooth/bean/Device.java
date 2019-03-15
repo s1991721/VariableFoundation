@@ -1,33 +1,47 @@
 package com.jef.variablefoundation.bluetooth.bean;
 
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
+
+import com.jef.variablefoundation.utils.Logger;
 
 /**
  * Created by mr.lin on 2019/3/13
  * 蓝牙设备
  */
-public class Device {
+public class Device implements DeviceOperation {
 
-    BluetoothDevice bluetoothDevice;
+    protected Logger logger = new Logger(this);
+
+    protected BluetoothDevice mBluetoothDevice;
 
     public Device(BluetoothDevice bluetoothDevice) {
-        this.bluetoothDevice = bluetoothDevice;
+        this.mBluetoothDevice = bluetoothDevice;
     }
 
     public String getName() {
-        return bluetoothDevice.getName();
+        return mBluetoothDevice.getName();
     }
 
     public String getAddress() {
-        return bluetoothDevice.getAddress();
+        return mBluetoothDevice.getAddress();
     }
 
     public BluetoothDevice getBluetoothDevice() {
-        return bluetoothDevice;
+        return mBluetoothDevice;
     }
 
     @Override
-    public String toString() {
-        return getName()+"---"+getAddress();
+    public void connect(Context context, DeviceChangeListener deviceChangeListener) {
     }
+
+    @Override
+    public void read(BluetoothGattCharacteristic characteristic) {
+    }
+
+    @Override
+    public void write() {
+    }
+
 }

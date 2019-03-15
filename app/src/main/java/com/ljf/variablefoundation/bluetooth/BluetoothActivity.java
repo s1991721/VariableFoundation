@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.jef.variablefoundation.base.BaseActivity;
 import com.jef.variablefoundation.bluetooth.BluetoothManager;
 import com.jef.variablefoundation.bluetooth.bean.Device;
+import com.jef.variablefoundation.bluetooth.bean.DeviceChangeListener;
+import com.jef.variablefoundation.bluetooth.device.MaiBoBo;
 import com.jef.variablefoundation.bluetooth.listener.InitListener;
 import com.jef.variablefoundation.bluetooth.listener.ScanListener;
 import com.ljf.variablefoundation.R;
@@ -103,10 +105,10 @@ public class BluetoothActivity extends BaseActivity {
 
                     @Override
                     public void scanError(int code) {
-                        if (code==MISS_INIT){
+                        if (code == MISS_INIT) {
                             textView.setText("没有init");
                         }
-                        if (code==TIME_OUT){
+                        if (code == TIME_OUT) {
                             textView.setText("扫描超时结束");
                         }
                     }
@@ -117,7 +119,29 @@ public class BluetoothActivity extends BaseActivity {
         mAdapter.setItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothManager.connect(mDevices.get((Integer) v.getTag()));
+                textView.setText("连接中");
+                MaiBoBo device = new MaiBoBo(mDevices.get((Integer) v.getTag()));
+                mBluetoothManager.connect(device, new DeviceChangeListener<MaiBoBo>() {
+                    @Override
+                    public void onConnected(@NonNull MaiBoBo device) {
+                        textView.setText("已连接" + device.getName());
+                    }
+
+                    @Override
+                    public void onConnectError() {
+                        textView.setText("连接失败");
+                    }
+
+                    @Override
+                    public void onRead(byte[] data) {
+                        textView.setText("onRead" + data);
+                    }
+
+                    @Override
+                    public void onWrite() {
+                        textView.setText("onWrite");
+                    }
+                });
             }
         });
         linkBt.setOnClickListener(new View.OnClickListener() {
