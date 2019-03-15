@@ -2,6 +2,7 @@ package com.ljf.variablefoundation;
 
 import com.jef.variablefoundation.base.BaseApplication;
 import com.jef.variablefoundation.base.BaseManager;
+import com.jef.variablefoundation.bluetooth.BluetoothManager;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class VFApplication extends BaseApplication {
     @Override
     protected void registerManager(List<BaseManager> managers) {
-
+        managers.add(new BluetoothManager());
     }
 
     @Override

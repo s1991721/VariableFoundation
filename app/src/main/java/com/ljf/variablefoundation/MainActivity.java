@@ -24,6 +24,7 @@ public class MainActivity extends BaseActivity {
     Button showDialogBt;
     Button dismissDialogBt;
     Button exceptionBt;
+    Button bluetoothBt;
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -91,6 +92,14 @@ public class MainActivity extends BaseActivity {
         });
 
         PermissionUtils.requestAllPermission(this);
+
+        bluetoothBt = findViewById(R.id.bluetoothBt);
+        bluetoothBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(BluetoothActivity.class);
+            }
+        });
     }
 
 
