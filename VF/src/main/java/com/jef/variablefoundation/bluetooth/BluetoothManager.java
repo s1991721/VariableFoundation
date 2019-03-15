@@ -108,8 +108,9 @@ public class BluetoothManager extends BaseManager {
     private BluetoothScanner mBluetoothScanner;
     private ScanListener mScanListener;
     private Map<String, Device> mScannedDevices = new HashMap<>();
-    private long mScanTimeOut = -1;//毫秒
+    private long mScanTimeOut = 30 * 1000;//毫秒
 
+    //扫描超时时间默认30秒
     public void setScanTimeOut(long timeOut) {
         this.mScanTimeOut = timeOut;
     }

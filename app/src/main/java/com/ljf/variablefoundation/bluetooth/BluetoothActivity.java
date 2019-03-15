@@ -103,7 +103,12 @@ public class BluetoothActivity extends BaseActivity {
 
                     @Override
                     public void scanError(int code) {
-
+                        if (code==MISS_INIT){
+                            textView.setText("没有init");
+                        }
+                        if (code==TIME_OUT){
+                            textView.setText("扫描超时结束");
+                        }
                     }
 
                 });
