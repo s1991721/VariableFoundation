@@ -122,7 +122,7 @@ public class BluetoothManager extends BaseManager {
         mScanListener = scanListener;
 
         if (mBluetoothScanner == null) {
-            mBluetoothScanner = new BluetoothScanner();
+            mBluetoothScanner = BluetoothScanner.getScanner();
         }
 
         mBluetoothScanner.scan(new BluetoothScanner.DeviceFindListener() {
