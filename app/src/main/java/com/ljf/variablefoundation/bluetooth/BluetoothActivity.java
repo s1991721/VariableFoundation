@@ -1,7 +1,9 @@
-package com.ljf.variablefoundation;
+package com.ljf.variablefoundation.bluetooth;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +14,9 @@ import com.jef.variablefoundation.bluetooth.BluetoothManager;
 import com.jef.variablefoundation.bluetooth.bean.Device;
 import com.jef.variablefoundation.bluetooth.listener.InitListener;
 import com.jef.variablefoundation.bluetooth.listener.ScanListener;
+import com.ljf.variablefoundation.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +33,9 @@ public class BluetoothActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private BluetoothManager mBluetoothManager;
 
+    private List<Device> mDevices;
+    private BluetoothAdapter mAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,11 @@ public class BluetoothActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         mBluetoothManager = getManager(BluetoothManager.class);
+
+        mDevices = new ArrayList<>();
+        mAdapter = new BluetoothAdapter(this, mDevices);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -83,10 +95,24 @@ public class BluetoothActivity extends BaseActivity {
                 textView.setText("扫描中。。。");
                 mBluetoothManager.scan(new ScanListener() {
                     @Override
-                    public void scanResult(@Nullable List<Device> devices) {
+                    public void scanResult(@NonNull List<Device> devices) {
+                        mDevices.clear();
+                        mDevices.addAll(devices);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void scanError(int code) {
 
                     }
+
                 });
+            }
+        });
+        mAdapter.setItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBluetoothManager.connect(mDevices.get((Integer) v.getTag()));
             }
         });
         linkBt.setOnClickListener(new View.OnClickListener() {

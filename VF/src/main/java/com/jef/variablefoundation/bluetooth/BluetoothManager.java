@@ -116,7 +116,7 @@ public class BluetoothManager extends BaseManager {
     public void scan(@NonNull final ScanListener scanListener, @Nullable final DeviceFilter deviceFilter) {
 
         if (!isInitSuccess) {
-            scanListener.scanResult(null);
+            scanListener.scanError(ScanListener.MISS_INIT);
             return;
         }
         mScanListener = scanListener;

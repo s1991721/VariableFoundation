@@ -13,6 +13,7 @@ import com.jef.variablefoundation.net.http.OnResponseListener;
 import com.jef.variablefoundation.user.bean.UserInfo;
 import com.jef.variablefoundation.user.requester.LoginRequester;
 import com.jef.variablefoundation.utils.PermissionUtils;
+import com.ljf.variablefoundation.bluetooth.BluetoothActivity;
 
 /**
  * Created by mr.lin on 2018/11/7
