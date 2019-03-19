@@ -1,7 +1,6 @@
 package com.jef.variablefoundation.bluetooth.bean;
 
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 
 import com.jef.variablefoundation.utils.Logger;
@@ -37,11 +36,10 @@ public class Device implements DeviceOperation {
     }
 
     @Override
-    public void read(BluetoothGattCharacteristic characteristic) {
+    public void onRead(byte[] bytes) {
     }
 
     @Override
-    public void write() {
+    public void write(String order) {
     }
-
 }

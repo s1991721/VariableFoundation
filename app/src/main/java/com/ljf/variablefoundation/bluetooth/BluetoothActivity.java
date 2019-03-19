@@ -14,6 +14,7 @@ import com.jef.variablefoundation.bluetooth.BluetoothManager;
 import com.jef.variablefoundation.bluetooth.bean.Device;
 import com.jef.variablefoundation.bluetooth.bean.DeviceChangeListener;
 import com.jef.variablefoundation.bluetooth.device.MaiBoBo;
+import com.jef.variablefoundation.bluetooth.device.MaiBoBoResult;
 import com.jef.variablefoundation.bluetooth.listener.InitListener;
 import com.jef.variablefoundation.bluetooth.listener.ScanListener;
 import com.ljf.variablefoundation.R;
@@ -31,12 +32,15 @@ public class BluetoothActivity extends BaseActivity {
     private Button initBt;
     private Button scanBt;
     private Button linkBt;
-    private Button sendBt;
+    private Button measureBt;
+    private Button shutdownBt;
     private RecyclerView recyclerView;
     private BluetoothManager mBluetoothManager;
 
     private List<Device> mDevices;
     private BluetoothAdapter mAdapter;
+
+    private MaiBoBo maiBoBo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +52,8 @@ public class BluetoothActivity extends BaseActivity {
         initBt = findViewById(R.id.initBt);
         scanBt = findViewById(R.id.scanBt);
         linkBt = findViewById(R.id.linkBt);
-        sendBt = findViewById(R.id.sendBt);
+        measureBt = findViewById(R.id.measureBt);
+        shutdownBt = findViewById(R.id.shutdownBt);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -124,6 +129,7 @@ public class BluetoothActivity extends BaseActivity {
                 mBluetoothManager.connect(device, new DeviceChangeListener<MaiBoBo>() {
                     @Override
                     public void onConnected(@NonNull MaiBoBo device) {
+                        maiBoBo = device;
                         textView.setText("已连接" + device.getName());
                     }
 
@@ -133,13 +139,13 @@ public class BluetoothActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onRead(byte[] data) {
-                        textView.setText("onRead" + data);
+                    public void onRead(String data) {
+
                     }
 
                     @Override
-                    public void onWrite() {
-                        textView.setText("onWrite");
+                    public void onWrite(String data) {
+
                     }
                 });
             }
@@ -147,13 +153,38 @@ public class BluetoothActivity extends BaseActivity {
         linkBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                maiBoBo.setMaiBoboCallBack(new MaiBoBo.MaiBoboCallBack() {
+                    @Override
+                    public void onLinked() {
+                        textView.setText("onLinked:");
+                    }
 
+                    @Override
+                    public void onMeasuring(MaiBoBoResult maiBoBoResult) {
+                        textView.setText("onMeasuring:" + maiBoBoResult.getMmHg());
+                    }
+
+                    @Override
+                    public void onFinalResult(MaiBoBoResult maiBoBoResult) {
+                        textView.setText("onFinalResult:" + "\n"+
+                                "SYS:" + maiBoBoResult.getSYS() + "\n" +
+                                "DIA:" + maiBoBoResult.getDIA() + "\n" +
+                                "PUL:" + maiBoBoResult.getPUL());
+                    }
+                });
+                maiBoBo.link();
             }
         });
-        sendBt.setOnClickListener(new View.OnClickListener() {
+        measureBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                maiBoBo.startMeasure();
+            }
+        });
+        shutdownBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                maiBoBo.shutdown();
             }
         });
     }

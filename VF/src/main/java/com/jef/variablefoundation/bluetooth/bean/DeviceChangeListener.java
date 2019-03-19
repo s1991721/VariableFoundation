@@ -11,7 +11,7 @@ public interface DeviceChangeListener<D extends Device> {
 
     void onConnectError();
 
-    void onRead(byte[] data);
+    void onRead(String data);
 
-    void onWrite();
+    void onWrite(String data);
 }

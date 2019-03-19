@@ -1,6 +1,5 @@
 package com.jef.variablefoundation.bluetooth.bean;
 
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 
 /**
@@ -10,7 +9,7 @@ import android.content.Context;
 public interface DeviceOperation {
     void connect(Context context, DeviceChangeListener deviceChangeListener);
 
-    void read(BluetoothGattCharacteristic characteristic);
+    void onRead(byte[] bytes);
 
-    void write();
+    void write(String order);
 }

@@ -49,26 +49,12 @@ public class StringUtils {
         }
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            return toHex(messageDigest.digest(string.getBytes()));
+            return DigitUtils.byteToHex(messageDigest.digest(string.getBytes()));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return "";
     }
-
-    //转十六进制
-    public static String toHex(byte[] bytes) {
-        StringBuffer stringBuffer = new StringBuffer(bytes.length);
-        for (byte b : bytes) {
-            String temp = Integer.toHexString(0xFF & b);
-            if (temp.length() == 1) {
-                stringBuffer.append('0');
-            }
-            stringBuffer.append(temp);
-        }
-        return stringBuffer.toString();
-    }
-
 
     public static boolean isPhoneNumber(String phone) {
         return true;

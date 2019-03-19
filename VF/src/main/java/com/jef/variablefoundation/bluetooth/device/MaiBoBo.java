@@ -9,6 +9,12 @@ import android.support.annotation.NonNull;
 
 import com.jef.variablefoundation.bluetooth.bean.Device;
 import com.jef.variablefoundation.bluetooth.bean.DeviceChangeListener;
+import com.jef.variablefoundation.utils.DigitUtils;
+import com.jef.variablefoundation.utils.async.AsyncTaskVF;
+
+import static com.jef.variablefoundation.bluetooth.device.MaiBoBoResult.RESULT_TYPE_FINAL;
+import static com.jef.variablefoundation.bluetooth.device.MaiBoBoResult.RESULT_TYPE_LINKED;
+import static com.jef.variablefoundation.bluetooth.device.MaiBoBoResult.RESULT_TYPE_PROCESSING;
 
 /**
  * Created by mr.lin on 2019/3/15
@@ -20,13 +26,19 @@ public final class MaiBoBo extends Device {
     private BluetoothGattCharacteristic characteristicRead;
     private BluetoothGattCharacteristic characteristicWrite;
     private DeviceChangeListener deviceChangeListener;
+    private MaiBoboCallBack mMaiBoboCallBack;
 
     public MaiBoBo(Device device) {
         super(device.getBluetoothDevice());
     }
 
+    public void setMaiBoboCallBack(MaiBoBo.MaiBoboCallBack maiBoboCallBack) {
+        mMaiBoboCallBack = maiBoboCallBack;
+    }
+
     @Override
-    public void connect(@NonNull Context context, @NonNull final DeviceChangeListener deviceConnectListener) {
+    public void connect(@NonNull Context context, @NonNull final DeviceChangeListener deviceChangeListener) {
+        this.deviceChangeListener = deviceChangeListener;
         mBluetoothGatt = mBluetoothDevice.connectGatt(context, false, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -56,9 +68,9 @@ public final class MaiBoBo extends Device {
                         if (characteristicRead != null && characteristicWrite != null) {
                             logger.i("onServicesDiscovered OK");
                             mBluetoothGatt.setCharacteristicNotification(characteristicRead, true);
-                            deviceConnectListener.onConnected(MaiBoBo.this);
+                            deviceChangeListener.onConnected(MaiBoBo.this);
                         } else {
-                            deviceConnectListener.onConnectError();
+                            deviceChangeListener.onConnectError();
                         }
                     }
                 }
@@ -67,7 +79,7 @@ public final class MaiBoBo extends Device {
             @Override
             public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                 logger.i("onCharacteristicChanged");
-                read(characteristic);
+                onRead(characteristic.getValue());
             }
 
             @Override
@@ -83,13 +95,100 @@ public final class MaiBoBo extends Device {
     }
 
     @Override
-    public void read(BluetoothGattCharacteristic characteristic) {
-        deviceChangeListener.onRead(characteristic.getValue());
+    public void onRead(byte[] bytes) {
+        parser(bytes);
     }
 
     @Override
-    public void write() {
-        deviceChangeListener.onWrite();
+    public void write(String order) {
+        byte[] bytes = DigitUtils.hex2byte(order.getBytes());
+        characteristicWrite.setValue(bytes);
+        mBluetoothGatt.writeCharacteristic(characteristicWrite);
+        deviceChangeListener.onWrite(order);
+    }
+
+    private void parser(final byte[] bytes) {
+        new AsyncTaskVF<MaiBoBoResult>() {
+            @Override
+            public MaiBoBoResult runOnBackGround() {
+
+                MaiBoBoResult result = new MaiBoBoResult();
+
+                if (DigitUtils.byteToHex(bytes).startsWith("aa800203010100")) {
+                    result.setType(RESULT_TYPE_LINKED);
+                    return result;
+                }
+
+                if (DigitUtils.byteToHex(bytes).startsWith("aa800208010500000000")) {
+                    result.setType(RESULT_TYPE_PROCESSING);
+
+                    int mmHg = (0xFF & bytes[10]);
+                    result.setMmHg(mmHg);
+
+                    return result;
+                }
+                if (DigitUtils.byteToHex(bytes).startsWith("aa80020f0106")) {
+                    result.setType(RESULT_TYPE_FINAL);
+
+                    int sys = (0xFF & bytes[14]);
+                    int dia = (0xFF & bytes[16]);
+                    int pul = (0xFF & bytes[18]);
+                    result.setSYS(sys);
+                    result.setDIA(dia);
+                    result.setPUL(pul);
+
+                    return result;
+                }
+
+                return null;
+            }
+
+            @Override
+            public void runOnUIThread(MaiBoBoResult maiBoBoResult) {
+                deviceChangeListener.onRead(DigitUtils.byteToHex(bytes));
+                if (mMaiBoboCallBack != null && maiBoBoResult != null) {
+                    switch (maiBoBoResult.getType()) {
+                        case RESULT_TYPE_LINKED:
+                            mMaiBoboCallBack.onLinked();
+                            break;
+                        case RESULT_TYPE_PROCESSING:
+                            mMaiBoboCallBack.onMeasuring(maiBoBoResult);
+                            break;
+                        case RESULT_TYPE_FINAL:
+                            mMaiBoboCallBack.onFinalResult(maiBoBoResult);
+                            break;
+                    }
+                }
+
+            }
+        }.execute();
+
+    }
+
+    //业务回调
+    public interface MaiBoboCallBack {
+        void onLinked();
+
+        void onMeasuring(MaiBoBoResult maiBoBoResult);
+
+        void onFinalResult(MaiBoBoResult maiBoBoResult);
+    }
+
+    //设备操作***********************************************************
+
+    //连接
+    public void link() {
+        write("cc80020301010001");
+    }
+
+    //开始测量
+    public void startMeasure() {
+        write("cc80020301020002");
+    }
+
+    //关机
+    public void shutdown() {
+        write("cc80020301040004");
     }
 
 }

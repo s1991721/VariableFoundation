@@ -107,6 +107,7 @@ public class BluetoothManager extends BaseManager {
     private ScanListener mScanListener;
     private Map<String, Device> mScannedDevices = new HashMap<>();
     private long mScanTimeOut = 30 * 1000;//毫秒
+    private CountDownTimer countDownTimer;
 
     //扫描超时时间默认30秒
     public void setScanTimeOut(long timeOut) {
@@ -150,7 +151,7 @@ public class BluetoothManager extends BaseManager {
         });
 
         if (mScanTimeOut > 0) {//超时
-            new CountDownTimer(mScanTimeOut, 1000) {
+            countDownTimer = new CountDownTimer(mScanTimeOut, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -168,6 +169,10 @@ public class BluetoothManager extends BaseManager {
     }
 
     public void stopScan() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
         mBluetoothScanner.stopScan();
         isScanning = false;
     }
