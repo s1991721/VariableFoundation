@@ -54,7 +54,7 @@ public class BluetoothManager extends BaseManager {
 
         if (Build.VERSION.SDK_INT >= 23) {//6.0版本
 
-            if (!PermissionUtils.isPermissionGranded(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION)) {//定位权限
+            if (!PermissionUtils.isPermissionGranted(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION)) {//定位权限
                 initListener.initResult(InitListener.LOCATION_PERMISSION_DISABLE);
                 return;
             }

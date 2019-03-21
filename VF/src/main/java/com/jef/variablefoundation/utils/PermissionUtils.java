@@ -46,7 +46,7 @@ public class PermissionUtils {
                 });
     }
 
-    public static boolean isPermissionGranded(Context context, String permission) {
+    public static boolean isPermissionGranted(Context context, String permission) {
         return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(context, permission);
 //        return new RxPermissions(activity).isGranted(permission);
     }
