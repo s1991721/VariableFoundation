@@ -65,6 +65,7 @@
 #-------------------------------------------------------------base-----------------------------------------------------------------------
 
 #------------------------------------------逻辑保留---------------------------------------------------------------------------------------
+#SDK
 -keep public class com.ljf.mbb.BluetoothManager{
     public *;
 }
@@ -87,4 +88,25 @@
 -keep class com.ljf.mbb.Device{
     public *;
 }
+
+
+
+
+
+#Android
+#base
+-keep public class * extends com.canceraide.mylibrary.base.BaseActivity
+-keep public class * extends com.canceraide.mylibrary.base.BaseFragment
+-keep public class * extends com.canceraide.mylibrary.base.BaseManager
+
+#bean
+-keep class com.canceraide.canceraide_patient.manager.config.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.disease.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.drug.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.exam.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.symptom.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.relation.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.dynamic.bean.** { *; }
+-keep class com.canceraide.mylibrary.user.bean.** { *; }
+-keep class com.canceraide.canceraide_patient.manager.message.bean.** { *; }
 #------------------------------------------逻辑保留---------------------------------------------------------------------------------------
