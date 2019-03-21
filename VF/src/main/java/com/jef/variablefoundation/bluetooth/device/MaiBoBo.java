@@ -65,13 +65,13 @@ public final class MaiBoBo extends Device {
                                 characteristicRead = c;
                             }
                         }
-                        if (characteristicRead != null && characteristicWrite != null) {
-                            logger.i("onServicesDiscovered OK");
-                            mBluetoothGatt.setCharacteristicNotification(characteristicRead, true);
-                            deviceChangeListener.onConnected(MaiBoBo.this);
-                        } else {
-                            deviceChangeListener.onConnectError();
-                        }
+                    }
+                    if (characteristicRead != null && characteristicWrite != null) {
+                        logger.i("onServicesDiscovered OK");
+                        mBluetoothGatt.setCharacteristicNotification(characteristicRead, true);
+                        deviceChangeListener.onConnected(MaiBoBo.this);
+                    } else {
+                        deviceChangeListener.onConnectError();
                     }
                 }
             }
