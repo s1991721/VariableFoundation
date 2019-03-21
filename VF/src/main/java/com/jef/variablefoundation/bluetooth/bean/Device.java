@@ -2,6 +2,7 @@ package com.jef.variablefoundation.bluetooth.bean;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.jef.variablefoundation.utils.Logger;
 
@@ -15,12 +16,18 @@ public class Device implements DeviceOperation {
 
     protected BluetoothDevice mBluetoothDevice;
 
+    private String name = "";
+
     public Device(BluetoothDevice bluetoothDevice) {
         this.mBluetoothDevice = bluetoothDevice;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
-        return mBluetoothDevice.getName();
+        return TextUtils.isEmpty(mBluetoothDevice.getName()) ? name : mBluetoothDevice.getName();
     }
 
     public String getAddress() {
@@ -41,5 +48,14 @@ public class Device implements DeviceOperation {
 
     @Override
     public void write(String order) {
+    }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "logger=" + logger +
+                ", mBluetoothDevice=" + mBluetoothDevice +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -11,7 +11,10 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.jef.variablefoundation.bluetooth.BleUtils;
 import com.jef.variablefoundation.bluetooth.bean.Device;
+import com.jef.variablefoundation.utils.DigitUtils;
+import com.jef.variablefoundation.utils.Logger;
 
 /**
  * Created by mr.lin on 2019/3/15
@@ -26,13 +29,18 @@ public class BluetoothScanner21 extends BluetoothScanner {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             BluetoothDevice device = result.getDevice();
-            if (device == null
-                    || TextUtils.isEmpty(device.getAddress())
-                    || TextUtils.isEmpty(device.getName())) {
+            if (device == null) {
                 return;
             }
             Device device1 = new Device(device);
-
+            if (TextUtils.isEmpty(device.getName())) {
+                Logger.i("onScanResult" + BleUtils.parseDeviceName(result.getScanRecord().getBytes()), DigitUtils.byteToHex(result.getScanRecord().getBytes()));
+                String name = BleUtils.parseDeviceName(result.getScanRecord().getBytes());
+                device1.setName(name);
+            }
+            if (TextUtils.isEmpty(device1.getName())) {
+                return;
+            }
             deviceFindListener.onDeviceFind(device1);
         }
 

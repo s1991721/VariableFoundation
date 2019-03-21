@@ -136,7 +136,7 @@ public class BluetoothManager extends BaseManager {
                 logger.i(device.getAddress());
                 if (!mScannedDevices.containsKey(device.getAddress())) {
 
-                    logger.i("save");
+                    logger.i("save"+device.toString());
                     if (deviceFilter != null) {
                         if (deviceFilter.filter(device)) {
                             mScannedDevices.put(device.getAddress(), device);
