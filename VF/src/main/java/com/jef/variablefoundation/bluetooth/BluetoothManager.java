@@ -2,7 +2,6 @@ package com.jef.variablefoundation.bluetooth;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -11,13 +10,11 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 
 import com.jef.variablefoundation.base.BaseManager;
 import com.jef.variablefoundation.bluetooth.bean.Device;
 import com.jef.variablefoundation.bluetooth.bean.DeviceChangeListener;
 import com.jef.variablefoundation.bluetooth.listener.InitListener;
-import com.jef.variablefoundation.bluetooth.listener.ResultListener;
 import com.jef.variablefoundation.bluetooth.listener.ScanListener;
 import com.jef.variablefoundation.bluetooth.scan.BluetoothScanner;
 import com.jef.variablefoundation.bluetooth.scan.DeviceFilter;
@@ -136,7 +133,7 @@ public class BluetoothManager extends BaseManager {
                 logger.i(device.getAddress());
                 if (!mScannedDevices.containsKey(device.getAddress())) {
 
-                    logger.i("save"+device.toString());
+                    logger.i("save" + device.toString());
                     if (deviceFilter != null) {
                         if (deviceFilter.filter(device)) {
                             mScannedDevices.put(device.getAddress(), device);
@@ -194,25 +191,4 @@ public class BluetoothManager extends BaseManager {
         device.connect(getApplication(), deviceConnectListener);
     }
 
-    //控制*************************************************************
-
-    //发送指令
-    @WorkerThread
-    // TODO: 2019/3/13
-    public void send(byte[] order) {
-        logger.i("send");
-//        characteristicWrite.setValue(order);
-//        mBluetoothGatt.writeCharacteristic(characteristicWrite);
-    }
-
-    //获取数据***********************************************************
-    public ResultListener mResultListener;
-
-    //接收指令
-    @WorkerThread
-    // TODO: 2019/3/13
-    public void read(BluetoothGattCharacteristic characteristic) {
-//        logger.i( "read:\n" + Util.bytes2hex(characteristic.getValue()));
-        mResultListener.onResult(characteristic.getValue());
-    }
 }
