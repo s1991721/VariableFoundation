@@ -127,6 +127,7 @@ public class BluetoothManager extends BaseManager {
             mBluetoothScanner = BluetoothScanner.getScanner();
         }
 
+        mScannedDevices.clear();
         mBluetoothScanner.scan(new BluetoothScanner.DeviceFindListener() {
             @Override
             public void onDeviceFind(Device device) {
