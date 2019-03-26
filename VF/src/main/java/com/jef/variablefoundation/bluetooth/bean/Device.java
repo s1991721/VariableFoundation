@@ -51,6 +51,10 @@ public class Device implements DeviceOperation {
     }
 
     @Override
+    public void disConnect() {
+    }
+
+    @Override
     public String toString() {
         return "Device{" +
                 "logger=" + logger +

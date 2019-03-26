@@ -107,6 +107,15 @@ public final class MaiBoBo extends Device {
         deviceChangeListener.onWrite(order);
     }
 
+    @Override
+    public void disConnect() {
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.disconnect();
+            mBluetoothGatt.close();
+            mBluetoothGatt = null;
+        }
+    }
+
     private void parser(final byte[] bytes) {
         new AsyncTaskVF<MaiBoBoResult>() {
             @Override
@@ -189,6 +198,7 @@ public final class MaiBoBo extends Device {
     //关机
     public void shutdown() {
         write("cc80020301040004");
+        disConnect();
     }
 
 }

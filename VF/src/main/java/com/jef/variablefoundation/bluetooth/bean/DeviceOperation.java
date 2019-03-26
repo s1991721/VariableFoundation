@@ -12,4 +12,6 @@ public interface DeviceOperation {
     void onRead(byte[] bytes);
 
     void write(String order);
+
+    void disConnect();
 }
