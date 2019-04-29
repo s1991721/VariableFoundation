@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.jef.variablefoundation.BuildConfig;
 import com.jef.variablefoundation.R;
+import com.jef.variablefoundation.base.BaseActivity;
 import com.jef.variablefoundation.base.BaseApplication;
 import com.jef.variablefoundation.views.ActionBar;
 
@@ -19,7 +20,7 @@ import java.io.PrintStream;
  * Created by mr.lin on 2018/11/13
  * 异常展示页
  */
-public class ExceptionActivity extends FragmentActivity {
+public class ExceptionActivity extends BaseActivity {
 
     private TextView exceptionTv;
     private ActionBar actionBar;
