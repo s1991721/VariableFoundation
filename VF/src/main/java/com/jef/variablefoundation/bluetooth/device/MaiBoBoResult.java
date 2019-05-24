@@ -10,12 +10,12 @@ public class MaiBoBoResult {
     public static final int RESULT_TYPE_PROCESSING=1;
     public static final int RESULT_TYPE_FINAL=2;
 
-    private int type;
+    private int type;//当前结果类型
 
-    private int mmHg;
-    private int SYS;
-    private int DIA;
-    private int PUL;
+    private int mmHg;//测量中毫米汞柱
+    private int SYS;//收缩压
+    private int DIA;//舒张压
+    private int PUL;//脉搏
 
     public int getType() {
         return type;
