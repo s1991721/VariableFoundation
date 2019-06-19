@@ -171,7 +171,11 @@ public class BluetoothManager extends BaseManager {
             countDownTimer.cancel();
             countDownTimer = null;
         }
-        mBluetoothScanner.stopScan();
+        try {
+            mBluetoothScanner.stopScan();
+        } catch (IllegalStateException e) {//操作过程中，用户手动关闭蓝牙
+            e.printStackTrace();
+        }
         isScanning = false;
     }
 

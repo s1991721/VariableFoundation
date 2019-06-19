@@ -43,8 +43,10 @@ public final class MaiBoBo extends Device {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
                 logger.i("onConnectionStateChange");
-                if (status == BluetoothGatt.GATT_SUCCESS) {
+                if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothGatt.STATE_CONNECTED) {//连接成功才发现服务
                     mBluetoothGatt.discoverServices();
+                } else {
+                    deviceChangeListener.onConnectError();
                 }
             }
 
